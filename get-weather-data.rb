@@ -16,7 +16,7 @@ class GetWeatherData
     # block_noの例
     # 東京都東京:47662
     # 北海道札幌市:47412
-    # 
+    # 象徴HPから取得する
     def initialize(block_no)
         @params = {
             :block_no => block_no,
@@ -26,6 +26,7 @@ class GetWeatherData
 
     #------
     # 不快指数を計算するメソッド
+    # 定義式はwikipediaより
     # + Param:: 気温
     # + Param:: 湿度
     # + Return:: 不快指数
@@ -53,20 +54,25 @@ class GetWeatherData
         end
 	    (doc/"table.data2_s").each do |trs|
 		    (trs/"tr").each do |tr|
-                tds = (tr/"td")
+                tds = (tr/"td").map{|td| td.inner_text}
                 unless(tds[7].nil?)
                     begin
-                        hour = tds[0].inner_text
-                        temper = tds[4].inner_text
-                        humid = tds[5].inner_text                      
+                        temper = tds[4].to_f
+                        humid = tds[5].to_f
                         discomfort = get_discomfort(temper.to_f,humid.to_f)
     			        results << {
                             :year   =>  year,
                             :month  =>  month,
                             :day    =>  day,
-                            :hour   =>  hour,
+                            :hour   =>  tds[0],
+                            :land_pressure => tds[1].to_f,
+                            :sea_pressure => tds[2].to_f,
                             :temper =>  temper,
                             :humid  =>  humid,
+                            :wind_ave_velocity => tds[6].to_f,    
+                            :wind_ave_direction => tds[7],
+                            :wind_max_velocity => tds[8].to_f,
+                            :wind_max_direction => tds[9],
                             :discomfort =>  discomfort
                         }
                     rescue => e

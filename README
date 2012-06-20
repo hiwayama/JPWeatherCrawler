@@ -13,4 +13,6 @@ GetWeatherData
         北海道札幌市 => 47412
 
 - year,month,day
-    取得したい年月日 
+    取得したい年月日
+
+・出力
