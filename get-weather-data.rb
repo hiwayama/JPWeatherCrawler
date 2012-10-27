@@ -17,8 +17,9 @@ class GetWeatherData
     # 東京都東京:47662
     # 北海道札幌市:47412
     # 象徴HPから取得する
-    def initialize(block_no)
+    def initialize(prec_no, block_no)
         @params = {
+            :prec_no => prec_no,
             :block_no => block_no,
             :elem   =>  "minutes"
         }
