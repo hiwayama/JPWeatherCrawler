@@ -8,10 +8,10 @@ require'json'
 # 気象庁の過去のデータをJSONとして取得するクラス
 # http://www.data.jma.go.jp/obd/stats/etrn/index.phpから取得する
 class JPWeatherCrawler
-
   # 10分ごとのデータを取得するAPIのURI
   API_URL = "http://www.data.jma.go.jp/obd/stats/etrn/view/10min_s1.php?"
 
+  # + Param:: prec_no, 県コード
   # + Param:: block_no 地域コード
   def initialize(prec_no, block_no)
     @params = {
@@ -64,7 +64,7 @@ class JPWeatherCrawler
     
     # URIの生成
     uri = API_URL + @params.map{|k,v| "#{k.to_s}=#{v}"}.join("&")
-     
+    
     doc = Hpricot(open(uri))
     results = []
 	  (doc/"table.data2_s").each do |trs|
