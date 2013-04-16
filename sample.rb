@@ -2,8 +2,8 @@
 
 $LOAD_PATH << File.dirname(__FILE__)
 
-require'get-weather-data'
+require'jp-weather-crawler'
 
 # 北海道札幌市:47412
-obj = GetWeatherData.new(14,47412)
-puts obj.get_to_json(2012,8,1)
+crawler = JPWeatherCrawler.new(14,47412)
+puts crawler.fetch_to_json(2012,8,1)
