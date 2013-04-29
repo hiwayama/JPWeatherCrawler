@@ -1,14 +1,13 @@
-#! /usr/bin/ruby -Ku
 # -*- encoding:UTF-8 -*-
 
 require "jp-weather-crawler/version"
-require'open-uri'
-require'hpricot'
-require'json'
-require'date'
+require 'open-uri'
+require 'hpricot'
+require 'json'
+require 'date'
 
 module JPWeather
-  
+
   # 10分ごとのデータを取得するAPIのURI
   API_URL = "http://www.data.jma.go.jp/obd/stats/etrn/view/10min_s1.php?"
 
@@ -19,10 +18,10 @@ module JPWeather
   # + Param:: 気温
   # + Param:: 湿度
   # + Return:: 不快指数
-  def discomfort(temper,humid)
+  def discomfort(temper, humid)
     0.81*temper + 0.01*humid*(0.99*temper - 14.3) + 46.3
   end
-  
+
   module_function:discomfort
 
   # 気象庁の過去のデータをJSONとして取得するクラス
